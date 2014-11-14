@@ -30,6 +30,8 @@ NSString * const SLKKeyboardDidHideNotification =   @"SLKKeyboardDidHideNotifica
     CGPoint _draggingOffset;
 }
 
+@property (nonatomic, readwrite) IBOutlet UITableView *tableView;
+
 // The shared scrollView pointer, either a tableView or collectionView
 @property (nonatomic, weak) UIScrollView *scrollViewProxy;
 
@@ -149,6 +151,10 @@ NSString * const SLKKeyboardDidHideNotification =   @"SLKKeyboardDidHideNotifica
     self.shouldScrollToBottomAfterKeyboardShows = NO;
 }
 
+- (void)setTableView:(UITableView *)tableView {
+	_tableView = tableView;
+	self.scrollViewProxy = tableView;
+}
 
 #pragma mark - View lifecycle
 
@@ -565,7 +571,7 @@ NSString * const SLKKeyboardDidHideNotification =   @"SLKKeyboardDidHideNotifica
     }
     
     _inverted = inverted;
-    
+	return;
     self.scrollViewProxy.transform = CGAffineTransformMake(1, 0, 0, inverted ? -1 : 1, 0, 0);
     self.edgesForExtendedLayout = inverted ? UIRectEdgeNone : UIRectEdgeAll;
     
